@@ -1,0 +1,104 @@
+\documentclass[uplatex,dvipdfmx]{jsarticle}
+
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{linguex}
+\usepackage{cgloss4e}
+\usepackage{bm}
+\usepackage{here}
+\usepackage{indentfirst}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{comment}
+\usepackage{plautopatch}  % Added to ensure proper Japanese font handling
+% \usepackage{listings, jvlisting}　%ソースコードを書けるようにする
+% \usepackage{jlisting} %日本語が文字化けしないようにする
+\usepackage{booktabs}
+\usepackage{subcaption}
+
+\newcommand{\bvec}[1]{\mbox{\boldmath $#1$}}  % ベクトル用太字
+\newcommand{\bs}{$\bigstar$}
+
+% ソースコードを書くための設定
+\usepackage{listings,jlisting} %日本語のコメントアウトをする場合jvlisting（もしくはjlisting）が必要
+%ここからソースコードの表示に関する設定
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+\lstdefinestyle{output}{
+  basicstyle=\ttfamily\normalsize, % 出力結果用フォント設定
+  frame=tb,                        % 上下に横線
+  framesep=5pt,                    % 枠と内容の間隔
+  breaklines=true,                 % 長い行を折り返す
+  backgroundcolor=\color[gray]{0.95}, % 背景を薄いグレーに
+  xleftmargin=1em,                 % 左マージン調整
+  xrightmargin=1em,                % 右マージン調整
+  showstringspaces=false           % 空白を可視化しない
+}
+\newcommand{\tab}{表-}
+\newcommand{\fig}{図-}
+\newcommand{\code}{ソースコード}
+\usepackage{color}
+\usepackage{tablefootnote}
+
+\renewcommand{\lstlistingname}{ソースコード}
+
+\begin{comment}
+Multiline comments:
+write anything about this document.
+\end{comment}
+
+\setcounter{tocdepth}{1}
+
+\begin{document}
+
+\title{\LaTeX による文書作成の基本}
+\author{植田真生史}
+\date{\today}
+
+\maketitle
+
+本資料は奥村・黒木著『\LaTeX 2$\epsilon$美文書作成入門』$^\text{\cite{latex}}$の内容を要約，一部抜粋して作成したものである．
+
+\vspace{1cm}
+\tableofcontents
+\clearpage
+
+\input{./build/sec1.tex}
+\clearpage
+\input{./build/sec2.tex}
+\clearpage
+\input{./build/sec3.tex}
+\clearpage
+\input{./build/sec4.tex}
+\clearpage
+\input{./build/sec5.tex}
+\clearpage
+\input{./build/sec6.tex}
+\clearpage
+\input{./build/sec7.tex}
+
+
+% 参考文献
+\bibliographystyle{junsrt}  % 参考文献を引用された順で出力する
+\bibliography{latex}  % main.bib
+
+\end{document}
+
