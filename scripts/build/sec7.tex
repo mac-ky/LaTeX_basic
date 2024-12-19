@@ -1,0 +1,17 @@
+\section{相互参照}
+
+「\ref{sec:allocate_fig}を参照されたい」や「\fig\ref{fig:fig_left}を参照されたい」のように，章，節，図，表，式などを本文中で引用したいこともあろう．
+このときに有用なのが，相互参照機能である．
+相互参照機能は\textbackslash labelというコマンドと，\textbackslash refというコマンドをセットで使用する．
+
+まず，\textbackslash label\{$\cdots$\}は引用したい章，節，図，表，式の直後に記述し，\{$\cdots$\}の中に引用時に使用する名称を記述する．
+この名称は，自身が分かりやすく，覚えておきやすい名前にしておくと，効率的な執筆ができる．
+例えば，\code\ref{code:multicol}では，ロジットモデルの推定結果の表に対して，tab:logit\_resultのようなラベルを付与している．
+また，引用対象も明記しておくと良いだろう．
+具体的には，節を引用したい場合は\textbackslash label\{sec:hoge\}，表を引用したい場合は\textbackslash label\{tab:fuga\}のようなラベルを付与することが望ましい．
+
+上記のように付与したラベルを用いて，本文中で章，節，図，表，式を引用するには\textbackslash refコマンドを使用する．
+具体的には，\textbackslash ref\{$\cdots$\}の\{$\cdots$\}に上記の\textbackslash label\{\}コマンドで付与したラベルを記述する．
+すなわち，\code\ref{code:multicol}で示したロジットモデルの推定結果の表の場合は，表- \textbackslash ref\{tab:logit\_result\}と記述すると，表-\ref{tab:logit_result}のように出力される．
+ちなみに，著者は，"表-"を記述するのが面倒なので，プリアンブルにおいて，\textbackslash newcommand\{\textbackslash tab\}\{表-\}と記述して，\textbackslash tabコマンドを設定している．
+これによって，\textbackslash tab\textbackslash ref\{tab:logit\_result\}と記述すると，\tab\ref{tab:logit_result}と出力される．

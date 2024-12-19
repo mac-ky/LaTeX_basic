@@ -1,0 +1,287 @@
+\section{\LaTeXe の基本}
+\subsection{最低限のルール}
+\label{sec:basic_rule}
+
+\LaTeXe の文書を作る際の最低限のルールを以下に示す．
+\begin{enumerate}
+  \item 文書ファイルの拡張子は.texとする．
+  \item 文書の最初に以下のように用紙サイズ\footnote{何も指定しない場合はA4になる．}とテンプレートを指定する．
+    \begin{quote}
+      \textbackslash documentclass[b5paper]\{jsarticle\}
+    \end{quote}
+  \item 文章を始める位置に以下の命令を書く．
+    \begin{quote}
+      \textbackslash begin\{document\}
+    \end{quote}
+  \item 文章の最後に以下の命令を書く．
+    \begin{quote}
+      \textbackslash end\{document\}
+    \end{quote}
+  \item 入力しやすいように適宜Enterキーで改行しても構わない．ただし，Enterキーを2回押して，空白行を作ると，改段落してしまうので，注意が必要である．
+  \item \tab\ref{tab:special-characters}に示した特殊文字はそのままでは出力できないので，各文字に適した入力を行う．
+    \begin{table}[H]
+      \caption{\LaTeX における特殊文字}
+      \centering
+        \begin{tabular}{lcl}
+        \hline
+        \textbf{読み}       & \textbf{出力} & \textbf{入力} \\ \hline
+          hash               & \#            & \textbackslash\# \\ 
+          dollar             & \$            & \textbackslash\$ \\ 
+          percent            & \%            & \textbackslash\% \\ 
+          ampersand          & \&            & \textbackslash\& \\ 
+          tilde              & \~{}          & \textbackslash textasciitilde \\ 
+          underscore         & \_            & \textbackslash\_ \\ 
+          caret              & \^{}          & \textbackslash textasciicircum \\ 
+          backslash          & \textbackslash{} & \textbackslash textbackslash (数式モード内では \textbackslash backslash) \\ 
+          left brace         & \{            & \textbackslash\{ \\ 
+          right brace        & \}            & \textbackslash\} \\ \hline
+        \end{tabular}
+      \label{tab:special-characters}
+      \end{table}
+\end{enumerate}
+
+\subsection{ドキュメントクラス}
+
+\ref{sec:basic_rule}で説明したように，\textbackslash documentclass\{$\cdots$\}は文書の種類を指定するもので，文書ファイルの最初に記述する．
+
+波括弧(\{\})の中には\tab\ref{tab:document-classes}のいずれかを指定する\footnote{出版社や学会によって\tab\ref{tab:document-classes}以外のドキュメントクラスが提供されていることがある．}．
+articleの類は論文やレポートなどのいくつかの節(section)からなる文書である．
+bookやreportの類は，書籍などのいくつかの章(chapter)からなる文書である．
+\begin{table}[H]
+  \caption{文書クラスの用途と対応表}
+  \centering
+    \begin{tabular}{c|cccc}
+    \hline
+      用途      & 欧文 & 和文（旧・横） & 和文（旧・縦） & 和文（新・横） \\ \hline
+      論文・レポート    & article      & (u)jarticle             & (u)tarticle             & jsarticle               \\ 
+      長い報告書        & report       & (u)jreport              & (u)treport              & ---                     \\ 
+      本                & book         & (u)jbook                & (u)tbook                & jsbook                  \\ \hline
+    \end{tabular}
+  \label{tab:document-classes}
+\end{table}
+
+角括弧([])の中にはオプションとして以下のようなものを指定できる．
+\paragraph{本文のフォントサイズ\\}
+
+デフォルト値は10ptである．
+例えば，以下のようにフォントサイズを指定する．
+\begin{quote}
+  \textbackslash documentclass[10.5pt]\{jsarticle\}
+\end{quote}
+
+\paragraph{用紙サイズ\\}
+
+デフォルトはA4である．
+他にも，例えば次のようなサイズを指定することができる．
+\begin{table}[H]
+  \begin{quote}
+    \begin{tabular}{lll}
+       - & a4paper & A4版(210mm $\times$ 297mm) \\
+       - & a5paper & A4版(148mm $\times$ 210mm) \\
+       - & b4paper & A4版(257mm $\times$ 364mm) \\
+       - & b5paper & A4版(182mm $\times$ 257mm) \\
+       - & papersize & 出力PDFサイズを用紙サイズと合わせる \\
+    \end{tabular}    
+  \end{quote}
+\end{table}
+これらのサイズを以下のように指定する．
+\begin{quote}
+  \textbackslash documentclass[b5paper]\{jsarticle\}
+\end{quote}
+
+\paragraph{段組み\\}
+
+2段組みの文章を作る際は，ドキュメントクラスのオプションで次のように指定する．
+\begin{quote}
+  \textbackslash documentclass[twocolumn]\{jsarticle\}
+\end{quote}
+
+\paragraph{複数のオプションの組み合わせ\\}
+
+複数のオプションを組み合わせて指定する場合は，コンマ(,)を間に入れて次のように指定する．
+\begin{quote}
+  \textbackslash documentclass[b5paper,10.5pt,twocolumn]\{jsarticle\}
+\end{quote}
+
+\subsection{プリアンブル}
+
+文書ファイル中で\textbackslash documentclass\{$\cdots$\}と\textbackslash begin\{document\}の間の部分をプリアンブルと呼び，細かい設定を追加していく．
+設定には例えば，次のようなものがある．
+\begin{table}[H]
+  \begin{quote}
+    \begin{tabular}{lll}
+       - & \textbackslash pagestyle\{empty\} & ページ番号を振らない \\
+       - & \textbackslash usepackage\{newtxtext\} & newtxtextパッケージを取り込んで，欧文や数字をTimes系のフォントにする \\
+       - & \textbackslash usepackage\{multirow\} & multirowパッケージを取り込んで，表の行結合を可能にする． \\
+       - & \textbackslash usepackage\{multicolumn\} & multirowパッケージを取り込んで，表の列結合を可能にする． \\
+       - & \textbackslash newcommand\{\textbackslash tab\}\{表-\} & \textbackslash tab と打ち込むと表-のように出力されるコマンドを新規設定 \\
+    \end{tabular}    
+  \end{quote}
+\end{table}
+上記の設定の例はごく一部にすぎず，他にも様々な設定を行うことができる．
+
+\subsection{文章の構造}
+
+\LaTeX では文章の構造を明示するコマンドに以下のようなものを用いる．
+\begin{table}[H]
+  \begin{quote}
+    \begin{tabular}{lll}
+       - & \textbackslash part\{ぱーと\} & 部見出し"ぱーと" \\
+       - & \textbackslash chapter\{ちゃぷたー\} & 章見出し"ちゃぷたー" \\
+       - & \textbackslash section\{せくしょん\} & 節見出し"せくしょん" \\
+       - & \textbackslash subsection\{さぶせくしょん\} & 小節見出し"さぶせくしょん" \\
+       - & \textbackslash subsubsection\{さぶさぶせくしょん\} & 小々節見出し"さぶさぶせくしょん" \\
+       - & \textbackslash paragraph\{ぱらぐらふ\} & 段落見出し"ぱらぐらふ" \\
+       - & \textbackslash subparagraph\{さぶぱらぐらふ\} & 小段落見出し"さぶぱらぐらふ" \\
+    \end{tabular}    
+  \end{quote}
+\end{table}
+
+\subsection{タイトルと概要}
+
+タイトルを出力するには次の4つの命令を使う．
+\begin{table}[H]
+  \begin{quote}
+    \begin{tabular}{lll}
+       - & \textbackslash title\{たいとる\} & 文章のタイトル"たいとる" \\
+       - & \textbackslash auther\{山田太郎\} & 著者"山田太郎" \\
+       - & \textbackslash date\{?月?日\} & 執筆日"?月?日"\tablefootnote{\textbackslash today を指定すると自動的にコンパイルした日付になる．} \\
+       - & \textbackslash maketitle & 上記3つを出力する命令 \\
+    \end{tabular}    
+  \end{quote}
+\end{table}
+
+\subsection{注釈}
+
+プログラミング言語と同様に文書の中に出力されないコメントを入れることができる．
+このようなコメントアウトを行うには文頭に\%を書く．
+例えば，次のように注釈を入れることができる．
+\begin{lstlisting}[caption=コメントアウトの例,label=code:comment]
+  グラフより日本では少子高齢化が進んでいることが分かる．
+  % 他にもなにかかけるかもしれない．  
+\end{lstlisting}
+\code\ref{code:comment}は次のように出力される．
+
+\noindent\textbf{出力結果：}\hrulefill\\
+  グラフより日本では少子高齢化が進んでいることが分かる．
+  % 他にもなにかかけるかもしれない．
+\\\noindent\hrulefill  
+
+
+
+\subsection{その他の書式設定}
+
+\LaTeX では他にも様々な書式設定を行うことができる．
+以下にその一例を示す．
+
+\begin{table}[H]
+  \begin{quote}
+    \begin{tabular}{lll}
+       - & \textbackslash textgt\{ゴシック体\} & "ゴシック体"の部分を\textgt{ゴシック体}にする \\
+       - & \textbackslash textbf\{太字\} & "太字"の部分を\textbf{太字}にする \\
+       - & \{ \textbackslash Large少し大きな文字\} & "少し大きな文字"の部分を{\Large 少し大きな文字}にする \\
+       - & \textbackslash textcolor\{red\}\{赤文字\} & "赤文字"の部分を\textcolor{red}{赤文字}にする\tablefootnote{プリアンブルで，\textbackslash usepackage\{color\} と書いて，colorパッケージを取り込む必要がある．}\\
+    \end{tabular}    
+  \end{quote}
+\end{table}
+
+その他の書式設定についてはネット等に多くの情報があるので，各自調べてほしい．
+
+\subsection{環境} 
+
+\textbackslash\{hoge\} $\cdots$ \textbackslash\{hoge\}のように対になった命令を環境と呼ぶ．
+環境の内側では様々な設定が環境の外側と異なり，逆に環境の内側の書式設定は環境の外側に影響を与えない．
+環境を使用した場合の入力の例を\code\ref{code:environment}に示す．
+\begin{lstlisting}[caption=環境の例,label=code:environment]
+  ここは環境の外
+  \begin{center}
+    ここは環境の内側．
+    ここで\tiny 文字を小さくしても
+  \end{center}
+  環境の外側ではその影響を受けない．
+\end{lstlisting}
+\code\ref{code:environment}は以下のように出力される．
+
+\noindent\textbf{出力結果：}\hrulefill\\
+  ここは環境の外
+   \begin{center}
+     ここは環境の内側．
+     ここで\tiny 文字を小さくしても
+   \end{center}
+   環境の外側ではその影響を受けない．
+\\\noindent\hrulefill 
+
+環境には他にも図を扱うfigure環境や表を扱うtable環境，右寄せにするflushright環境など様々なものがある．
+
+\subsection{箇条書き}
+
+ここでは箇条書きに関する環境を3つ紹介する．
+
+\subsubsection{itemize環境}
+
+文頭に中黒などの記号をつけた箇条書きである．
+例えば，，以下のように入力する．
+\begin{lstlisting}[caption=itemize環境,label=code:itemize]
+  \LaTeX の特徴を箇条書きでまとめる．
+  \begin{itemize}
+    \item 数式がきれい
+    \item 図表番号を自動で振ってくれる
+    \item 文章の論理的な構造と視覚的なレイアウトを分けて考えられる
+  \end{itemize}
+\end{lstlisting}
+\code\ref{code:itemize}は以下のように出力される．
+
+\noindent\textbf{出力結果：}\hrulefill\\
+  \LaTeX の特徴を箇条書きでまとめる．
+  \begin{itemize}
+    \item 数式がきれい
+    \item 図表番号を自動で振ってくれる
+    \item 文章の論理的な構造と視覚的なレイアウトを分けて考えられる
+  \end{itemize} 
+\noindent\hrulefill 
+
+\subsubsection{enumerate環境}
+
+文頭に番号をつけた箇条書きである．
+例えば，以下のように入力する．
+\begin{lstlisting}[caption=enumerate環境,label=code:enumerate]
+  \LaTeX の特徴を箇条書きでまとめる．
+  \begin{enumerate}
+    \item 数式がきれい
+    \item 図表番号を自動で振ってくれる
+    \item 文章の論理的な構造と視覚的なレイアウトを分けて考えられる
+  \end{enumerate}
+\end{lstlisting}
+\code\ref{code:enumerate}は以下のように出力される．
+\clearpage
+\noindent\textbf{出力結果：}\hrulefill\\
+  \LaTeX の特徴を箇条書きでまとめる．
+  \begin{enumerate}
+    \item 数式がきれい
+    \item 図表番号を自動で振ってくれる
+    \item 文章の論理的な構造と視覚的なレイアウトを分けて考えられる
+  \end{enumerate} 
+\noindent\hrulefill 
+
+\subsubsection{description環境}
+
+左寄せ太字で見出しをつけた箇条書きである．
+例えば，以下のように入力する．
+\begin{lstlisting}[caption=description環境,label=code:description]
+  \LaTeX の特徴を箇条書きでまとめる．
+  \begin{description}
+    \item[利点1] 数式がきれい
+    \item[利点2] 図表番号を自動で振ってくれる
+    \item[利点3] 文章の論理的な構造と視覚的なレイアウトを分けて考えられる
+  \end{description}
+\end{lstlisting}
+\code\ref{code:description}は以下のように出力される．
+
+\noindent\textbf{出力結果：}\hrulefill\\
+  \LaTeX の特徴を箇条書きでまとめる．
+  \begin{description}
+    \item[利点1] 数式がきれい
+    \item[利点2] 図表番号を自動で振ってくれる
+    \item[利点3] 文章の論理的な構造と視覚的なレイアウトを分けて考えられる
+  \end{description} 
+\noindent\hrulefill 

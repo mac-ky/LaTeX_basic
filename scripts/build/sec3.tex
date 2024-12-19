@@ -1,0 +1,219 @@
+\section{数式の基本}
+
+\subsection{数式環境の種類}
+
+箇条書きと同様に，数式を記述する環境にも様々な種類がある．
+% その一例を\tab\ref{tab:math_env}に示す．
+
+
+% \begin{table}[H]
+%   \caption{数式環境の種類}
+%   \centering
+%     \begin{tabular}{ll}
+%       \hline
+%       \textbf{環境}          & \textbf{説明} \\ \hline
+%       \$\$                  & インライン数式 \\ 
+%       equation             & 1行の別行立て数式 \\ 
+%       align                & 位置合わせ可能の別行立て数式 \\ 
+%       gather               & 中央揃え可能の別行立て数式 \\ 
+%       $\sim*$(align*, alignat* ...) & 上の数式で、番号の付かないもの。基本的に不要（解説参照） \\ 
+%       split                & 数式環境の中で、1つの式を複数行に分ける \\ 
+%       aligned              & alignと同等のものを数式環境の中で使う \\ 
+%       gathered             & gatherと同等のものを数式環境の中で使う \\ \hline
+%     \end{tabular}
+%   \label{tab:math_env}
+% \end{table}
+
+\subsubsection{インライン数式}
+
+変数の定義など，本文の文中で数式表現を用いたいときに使用する．
+例えば，以下のように入力する．
+\begin{lstlisting}[caption=インライン数式,label=code:inline]
+  交通流率$q$と交通密度$k$，速度$v$の3変数の間には常に$q = kv$という関係が常に成り立つ．
+\end{lstlisting}
+\code\ref{code:inline}は以下のように出力される．
+
+\noindent\textbf{出力結果：}\hrulefill\\
+交通流率$q$と交通密度$k$，速度$v$の3変数の間には常に$q = kv$という関係が常に成り立つ．
+\\\noindent\hrulefill 
+
+\subsubsection{equation環境}
+
+1行の別行立ての数式を作る環境である．
+数式番号が不要な場合は，equation*のようにアスタリスク($\ast$)を付ける．
+例えば，以下のように入力する．
+\begin{lstlisting}[caption=equation環境,label=code:equation]
+  交通密度と速度の関係を一次関数とするGreenshieldsモデルでは速度$v$は式(\ref{equ:greenshields})のように表すことができる．
+  \begin{equation}
+    v = v_f (1 - \frac{k}{k_j})  \label{equ:greenshields}
+  \end{equation}
+  ここで，$v_f$は自由速度，$k_j$は飽和密度を表す．
+  さらに，式(\ref{equ:greenshields})を$q = kv$の関係を用いて変形すると，
+  \begin{equation*}
+    q = v_f (1 - \frac{k}{k_j}) k 
+  \end{equation*}
+  を得る．
+\end{lstlisting}
+\code\ref{code:equation}は以下のように出力される．
+
+\noindent\textbf{出力結果：}\hrulefill\\
+  交通密度と速度の関係を一次関数とするGreenshieldsモデルでは速度$v$は式(\ref{equ:greenshields})のように表すことができる．
+  \begin{equation}
+    v = v_f (1 - \frac{k}{k_j})  \label{equ:greenshields}
+  \end{equation}
+  ここで，$v_f$は自由速度，$k_j$は飽和密度を表す．
+  さらに，式(\ref{equ:greenshields})を$q = kv$の関係を用いて変形すると，
+  \begin{equation*}
+    q = v_f (1 - \frac{k}{k_j}) k 
+  \end{equation*}
+  を得る．
+\\\noindent\hrulefill 
+
+\subsubsection{gather環境}
+
+複数の数式を中央揃えで出力する場合に用いる．
+特定の数式のみについて数式番号が不要な場合は\textbackslash notagを数式の後に書いておく．
+例えば，以下のように入力する．
+\begin{lstlisting}[caption=gather環境,label=code:gather]
+  2つの式を$kv$関係と$qk$関係をまとめて示すと，次のようになる．
+  \begin{gather}
+    v = v_f (1 - \frac{k}{k_j}) \notag\\
+    q = v_f (1 - \frac{k}{k_j}) k \notag
+  \end{gather}
+\end{lstlisting}
+\code\ref{code:gather}は以下のように出力される．
+
+\noindent\textbf{出力結果：}\hrulefill\\
+  2つの式を$kv$関係と$qk$関係をまとめて示すと，次のようになる．
+  \begin{gather}
+    v = v_f (1 - \frac{k}{k_j}) \notag\\
+    q = v_f (1 - \frac{k}{k_j}) k \notag
+  \end{gather}
+\\\noindent\hrulefill 
+
+\subsubsection{align環境}
+
+複数の数式を指定した位置で揃えて出力する場合に用いる．
+位置揃えにはアンド(\&)を用いる．
+数式番号が不要な場合は，equation*のようにアスタリスク($\ast$)を付ける．
+例えば，以下のように入力する．
+\begin{lstlisting}[caption=align環境,label=code:align]
+  $qk$関係の式を変形すると
+  \begin{align*}
+    q &= v_f (1 - \frac{k}{k_j}) k \\
+    &= v_f (-\frac{1}{k_j} k^2 + k) \\
+    &= - \frac{v_f}{k_j} (k - \frac{k_j}{2})^2 + \frac{k_j v_f}{4}
+  \end{align*}
+\end{lstlisting}
+\code\ref{code:align}は以下のように出力される．
+\clearpage
+\noindent\textbf{出力結果：}\hrulefill\\
+  $qk$関係の式を変形すると
+  \begin{align*}
+    q &= v_f (1 - \frac{k}{k_j}) k \\
+    &= v_f (-\frac{1}{k_j} k^2 + k) \\
+    &= - \frac{v_f}{k_j} (k - \frac{k_j}{2})^2 + \frac{k_j v_f}{4}
+  \end{align*}
+\\\noindent\hrulefill 
+
+\subsubsection{数式環境の中で使う環境}
+
+先ほど示した\code\ref{code:align}では，align*のようにして，数式番号を振らなかった．
+実は，これはアスタリスク($\ast$)を付けなかった場合には，各行に式番号が振られてしまうためにやむを得ず行った処理である．
+では，式変形などで，1つの式が複数行にわたってしまったときに，その複数行の数式にまとめてひとつの式番号をつけるにはどうしたら良いだろうか？
+このような場合には，1つの式を複数行に分けることができるsplit環境が有用である．
+split環境を用いた入力例を以下に示す．
+\begin{lstlisting}[caption=split環境,label=code:split]
+  $qk$関係の式を変形すると，式(\ref{equ:greenshields_qk})のようになる．
+  \begin{align}
+    \begin{split}
+      q &= v_f (1 - \frac{k}{k_j}) k \\
+      &= v_f (-\frac{1}{k_j} k^2 + k) \\
+      &= - \frac{v_f}{k_j} (k - \frac{k_j}{2})^2 + \frac{k_j v_f}{4}  \label{equ:greenshields_qk}
+    \end{split}
+  \end{align}
+\end{lstlisting}
+\code\ref{code:split}は以下のように出力される．
+
+\noindent\textbf{出力結果：}\hrulefill\\
+  $qk$関係の式を変形すると，式(\ref{equ:greenshields_qk})のようになる．
+  \begin{align}
+    \begin{split}
+      q &= v_f (1 - \frac{k}{k_j}) k \\
+      &= v_f (-\frac{1}{k_j} k^2 + k) \\
+      &= - \frac{v_f}{k_j} (k - \frac{k_j}{2})^2 + \frac{k_j v_f}{4}  \label{equ:greenshields_qk}
+    \end{split}
+  \end{align}
+\\\noindent\hrulefill 
+
+\subsection{上付き文字，下付き文字}
+
+上付き文字はハット( $\hat{}$ )，下付き文字はアンダーバー(\_)を用いて記述する．
+ただし，上付きや下付きにしたい文字が1文字でない場合には，それらを中括弧(\{\})で括る．
+上付き文字や下付き文字の具体的な使用方法は\code\ref{code:split}を参照されたい．
+ちなみに，面積などの単位も上付き文字を用いて，mm\$ $\hat{}$ 2\$のように書く．
+すると，mm$^2$のように出力される．
+
+\subsection{括弧}
+
+\code\ref{code:equation}から\code\ref{code:split}に示したソースコードの出力結果を見ると，$(1 - \cfrac{k}{k_j})$のように括弧のサイズが数式の上下の高さと揃っていない．
+このような問題を解決するコマンドが\textbackslash left と \textbackslash rightである．
+これら2つのコマンドは必ずセットで用いる．
+このコマンドによる記述を用いることで連立方程式のような複数の数式を括弧で括るような出力を行うこともできる．
+
+\textbackslash left と \textbackslash rightを用いて\code\ref{code:equation}を書き直すと以下のようになる．
+
+\begin{lstlisting}[caption=left/rightコマンド,label=code:left_right]
+  交通密度と速度の関係を一次関数とするGreenshieldsモデルでは速度$v$は式(\ref{equ:greenshields2})のように表すことができる．
+  \begin{equation}
+    v = v_f \left(1 - \frac{k}{k_j} \right)  \label{equ:greenshields2}
+  \end{equation}
+  ここで，$v_f$は自由速度，$k_j$は飽和密度を表す．
+  さらに，式(\ref{equ:greenshields})を$q = kv$の関係を用いて変形すると，
+  \begin{equation*}
+    q = v_f \left(1 - \frac{k}{k_j} \right) k 
+  \end{equation*}
+  を得る．
+\end{lstlisting}
+\code\ref{code:left_right}は以下のように出力される．
+
+\noindent\textbf{出力結果：}\hrulefill\\
+  交通密度と速度の関係を一次関数とするGreenshieldsモデルでは速度$v$は式(\ref{equ:greenshields2})のように表すことができる．
+  \begin{equation}
+    v = v_f \left(1 - \frac{k}{k_j} \right)  \label{equ:greenshields2}
+  \end{equation}
+  ここで，$v_f$は自由速度，$k_j$は飽和密度を表す．
+  さらに，式(\ref{equ:greenshields})を$q = kv$の関係を用いて変形すると，
+  \begin{equation*}
+    q = v_f \left(1 - \frac{k}{k_j} \right) k 
+  \end{equation*}
+  を得る．
+\\\noindent\hrulefill 
+
+\subsection{その他の数式記号}
+
+数式に用いるコマンドは他にも様々なものがある．
+以下に一例を示すが，他にも様々なコマンドが存在するので，各自使用時にネット等で調べてほしい．
+
+\paragraph{和記号・積分記号\\}
+
+\textbackslash sum や \textbackslash int を用いることで，$\sum$や$\int$のように出力できる．
+
+\paragraph{分数\\}
+
+\textbackslash frac\{分子\}\{分母\} や\textbackslash cfrac\{分子\}\{分母\}を用いることで，$\frac{\text{分子}}{\text{分母}}$や$\cfrac{\text{分子}}{\text{分母}}$のように出力できる．
+
+\paragraph{ギリシャ文字\\}
+
+ギリシャ文字は特殊な文字であるため，数式環境の中でコマンドを用いて記述する．
+具体的には，$\alpha$と出力したければ，\$\textbackslash alpha\$と記述する．
+
+\paragraph{2項演算子\\}
+
+掛け算記号($\times$)や省略記号($\cdots$)が該当する．
+掛け算記号は\$ \textbackslash times \$，省略記号は\$ \textbackslash cdots \$のように書く．
+
+\paragraph{関係演算子\\}
+
+不等号($\leq$)やノットイコール($\neq$)が該当する．
+不等号は\$ \textbackslash leq \$，ノットイコールは\$ \textbackslash neq \$のように書く．

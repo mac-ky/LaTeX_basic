@@ -1,0 +1,127 @@
+\section{グラフィック}
+
+\subsection{図の挿入}
+
+\LaTeX における図の挿入は\code\ref{code:fig_basic}のようにプリアンブルにおける設定と本文における記述が必要になる．
+
+\begin{lstlisting}[caption=図の挿入の基本,label=code:fig_basic]
+  % プリアンブルの設定
+  \documentclass[dvipdfmx]{jsarticle} % dvipdfmxはドライバ名
+  \usepackage{graphicx}
+
+  % 本文の設定
+  \begin{document}
+
+  ここに本文を書く \\
+  \includegraphics[scale=0.2]{fig1.png} \\ % scale=0.3はオプション
+  
+  ここに本文を書く
+  \end{document}
+\end{lstlisting}
+\code\ref{code:fig_basic}は以下のように出力される．
+
+\noindent\textbf{出力結果：}\hrulefill\\
+  % % プリアンブルの設定
+  % \documentclass[dvipdfmx]{jsarticle}
+  % \usepackage{graphicx}
+
+  % % 本文の設定
+  % \begin{document}
+  ここに本文を書く \\
+  \includegraphics[scale=0.2]{fig1.png} \\
+  
+  ここに本文を書く 
+  % \end{document}
+\\\noindent\hrulefill 
+
+\subsubsection{プリアンブルの設定}
+
+プリアンブルでは，ドライバの指定とgraphicxパッケージを取り込む．
+
+ドライバ名の指定はドキュメントクラスのオプションで行う．
+ドライバにはdvipdfmxやdvipsなど複数の種類が存在するが，基本はdvipdfmxを使用する．
+
+graphicxパッケージの取り込みは，他のパッケージと同様で，プリアンブルで\textbackslash usepackage\{graphicx\}と記述する．
+パッケージの取り込みにおいてオプションを指定することも可能である．
+例えば，\textbackslash usepackage[draft]\{graphicx\}のように記述すると，図の部分が枠とファイル名だけになる．
+図を多用した文章では，コンパイルに要する時間が長くなることがあり，上記のようなオプションを指定すると，その時間を短縮することができる．
+  
+\subsubsection{本文における記述}
+
+本文中では\textbackslash includegraphics[オプション]\{ファイル名\}のように指定すると図を挿入することができる．
+ファイル名には挿入したい画像のファイル名(もしくは，パス)を記入する．
+なお，オプションは省略することができる．
+
+以下ではオプションに指定できるものの例を紹介する．
+
+\paragraph{widthオプション\\}
+
+指定の幅に合わせるように図を拡大または縮小して表示させたい場合は，widthオプションを用いる．
+例えば，width=56mmのように指定する．
+
+\paragraph{heightオプション\\}
+
+指定の高さに合わせるように図を拡大または縮小して表示させたい場合は，heightオプションを用いる．
+例えば，height=20mmのように指定する．
+
+\paragraph{widthオプションとheightオプションの同時使用\\}
+
+widthオプションとheightオプションを同時に用いると，図の縦横比を変えることができる．
+なお，keepaspectratioも記述すると，縦横比を変えずに指定の高さと幅に収まるように図が配置される．
+
+\paragraph{scaleオプション\\}
+
+画像のサイズを拡大縮小することができる．
+widthオプションやheightオプションとは異なり，図の大きさを倍数で指定するため，作成した図に10ptで書いていた文字を文書の上で8ptとして表示させたいといったときに便利である．
+例えば，scale=0.8のように記述する．
+
+\paragraph{draftオプション\\}
+
+draftと記述すると，パッケージの取り込みのオプションと同様に，図の枠とファイル名が表示される．
+
+\subsection{figure環境}
+
+論文に限らず，あらゆる文章に掲載される図にはキャプションが付けられているが，\code\ref{code:fig_basic}で出力した図には，キャプションがない．
+そこで，figure環境を用いて図を表示させる．
+figure環境は，例えば\code\ref{code:fig_env}のように記述する．
+図のキャプションは\textbackslash caption\{$\cdots$\}の中に書くことで設定できる．
+
+\begin{lstlisting}[caption=figure環境,label=code:fig_env]
+  % プリアンブルの設定
+  \documentclass[dvipdfmx]{jsarticle} % dvipdfmxはドライバ名
+  \usepackage{graphicx}
+
+  % 本文の設定
+  \begin{document}
+  
+  ここに本文を書く \\
+  \begin{figure}[H]
+    \centering  % 中央揃え
+    \includegraphics[scale=0.2]{fig1.png}  
+    \caption{図のきゃぷしょん}  % キャプションは図の下側に表示させる
+    \label{fig:fig1}  % 相互参照のためのラベル
+  \end{figure}
+
+  図-\ref{fig:fig1}が表示される．
+  \end{document}
+\end{lstlisting}
+\code\ref{code:fig_env}は以下のように出力される．
+
+\noindent\textbf{出力結果：}\hrulefill\\
+  % % プリアンブルの設定
+  % \documentclass[dvipdfmx]{jsarticle}
+  % \usepackage{graphicx}
+
+  % % 本文の設定
+  % \begin{document}
+  ここに本文を書く \\
+  \begin{figure}[H]
+    \centering  % 中央揃え
+    \includegraphics[scale=0.2]{fig1.png}  
+    \caption{図のきゃぷしょん}  % キャプションは図の下側に表示させる
+    \label{fig:fig1}  % 相互参照のためのラベル
+  \end{figure}
+
+  図-\ref{fig:fig1}が表示される．
+  % \end{document}
+\\\noindent\hrulefill 

@@ -1,0 +1,258 @@
+\section{表組み}
+
+\subsection{表組みの基本}
+
+表はtabular環境内で作成する．
+\code\ref{code:tabular_env}にその一例を示す．
+\code\ref{code:tabular_env}によって記述できる表は3行3列で，1列目が左寄せ，2,3列目が右寄せである\footnote{\textbackslash begin\{tabular\}の波括弧(\{\})の中で左寄せ(l)，中央揃え(c)，右寄せ(r)を指定する．ここで指定する列数と以降で記述する表の中身の列数が揃っていないとエラーになるので注意が必要である．}．
+セルとセルの間は \& を書き，新たな行に移るときは\textbackslash \textbackslash を書く．
+
+
+\begin{lstlisting}[caption=tabular環境,label=code:tabular_env]
+  \begin{tabular}{lll} % 左寄せ
+    項目 & \LaTeX & Word \\
+    数式 & 美しい & 美しくない \\ 
+    相互参照 & めっちゃラク & 面倒
+  \end{tabular}
+\end{lstlisting}
+  
+\code\ref{code:tabular_env}は以下のように出力される．
+\\ \noindent\textbf{出力結果：}\hrulefill \vspace{2mm}\\
+  \begin{tabular}{lll}
+    項目 & \LaTeX & Word \\
+    数式 & 美しい & 美しくない \\ 
+    相互参照 & めっちゃラク & 面倒
+  \end{tabular}
+  \vspace{2mm}
+\\\noindent\hrulefill  
+  
+
+\subsection{booktabsによる罫線}
+\label{sec:booktabs}
+
+\code\ref{code:tabular_env}によって記述した表には罫線が存在しなかった．
+\ref{sec:booktabs}と\ref{sec:hline}では表の罫線の引き方について説明する．
+
+まずは，booktabsパッケージを用いた罫線について説明する．
+booktabsパッケージはその他のパッケージと同様にプリアンブルにおいて，取り込みが必要である．
+\code\ref{code:tabular_env}の例をbooktabsパッケージを用いて書き直すと，\code\ref{code:booktabs}のようになる．
+\code\ref{code:booktabs}について，\textbackslash toprule は上端の罫線を引くコマンド，\textbackslash midruleは中間の罫線を引くコマンド，\textbackslash bottomruleは下端の罫線を引くコマンドである．
+これらのコマンドにはオプションを設定することもできるので，各自ネット等の情報を参照されたい．
+
+\begin{lstlisting}[caption=tabular環境,label=code:booktabs]
+  \documentclass{jsarticle}
+  \usepackage{booktabs}
+  \begin{document}
+
+  \begin{tabular}{lll} \toprule  % 上端の罫線
+    項目 & \LaTeX & Word \\ \midrule  % 中間の罫線
+    数式 & 美しい & 美しくない \\ 
+    相互参照 & めっちゃラク & 面倒 \\ \bottomrule  % 下端の罫線
+  \end{tabular}
+
+  \end{document}
+\end{lstlisting}
+
+\code\ref{code:booktabs}は以下のように出力される．
+\noindent\textbf{出力結果：}\hrulefill \vspace{2mm}\\
+  % \documentclass{jsarticle}
+  % \usepackage{booktabs}
+  % \begin{document}
+  \vspace{2mm}
+  \begin{tabular}{lll} \toprule  % 上端の罫線
+    項目 & \LaTeX & Word \\ \midrule  % 中間の罫線
+    数式 & 美しい & 美しくない \\ 
+    相互参照 & めっちゃラク & 面倒 \\ \bottomrule  % 下端の罫線
+  \end{tabular}
+  % \end{document}
+\\\noindent\hrulefill  
+
+
+\subsection{\LaTeX 標準の罫線}
+\label{sec:hline}
+
+ここではパッケージを使用しない\LaTeX 標準の罫線の引き方について説明する．
+パッケージを使用しないため，\ref{sec:booktabs}のようなプリアンブルの記述は不要である．
+\LaTeX 標準の罫線を使用した基本の表の作成方法を\code\ref{code:hline}に示す．
+縦罫線は\textbackslash begin\{tabular\}の波括弧(\{\})の中で縦線(｜)を記述することで出力される．
+横罫線は\textbackslash hline を記述することで出力される．
+なお，\textbackslash hline \textbackslash hline とすると，二重の横罫線を引くことができる．
+また，\textbackslash cline\{欄番号 - 欄番号\}とすることで，一部のみの横罫線を引くことができる．
+
+\begin{lstlisting}[caption=tabular環境,label=code:hline]
+  \begin{tabular}{l|ll} \hline
+    項目 & \LaTeX & Word \\ \hline \hline  % 二重の横罫線
+    数式 & 美しい & 美しくない \\ \cline{1-1}
+    相互参照 & めっちゃラク & 面倒 \\ \hline
+  \end{tabular}
+\end{lstlisting}
+
+\code\ref{code:hline}は以下のように出力される．
+\\ \noindent\textbf{出力結果：}\hrulefill \vspace{2mm}\\
+  \vspace{2mm}
+  \begin{tabular}{l|ll} \hline
+    項目 & \LaTeX & Word \\ \hline \hline  % 二重の横罫線
+    数式 & 美しい & 美しくない \\ \cline{1-1}
+    相互参照 & めっちゃラク & 面倒 \\ \hline
+  \end{tabular}
+  % \end{document}
+\\\noindent\hrulefill  
+
+\subsection{table環境}
+
+論文に限らず，あらゆる文章に掲載される表にはキャプションが付けられているが，\code\ref{code:tabular_env}で出力した表には，キャプションがない．
+そこで，table環境を用いて表を出力する．
+table環境は，例えば\code\ref{code:table_env}のように記述する．
+表のキャプションは\textbackslash caption\{$\cdots$\}の中に書くことで設定できる．
+
+\begin{lstlisting}[caption=基本の表,label=code:table_env]
+  果物の値段と個数を表-\ref{tab:basic_table}に示す．  
+  \begin{table}[h]
+    \centering
+    \caption{果物の値段と個数}  % ここで表のキャプションを指定する
+    \label{tab:basic_table}  % ここで表のラベルを指定する
+    \begin{tabular}{l|ll} \hline
+      項目 & \LaTeX & Word \\ \hline \hline  % 二重の横罫線
+      数式 & 美しい & 美しくない \\ 
+      相互参照 & めっちゃラク & 面倒 \\ \hline
+    \end{tabular}
+  \end{table}
+\end{lstlisting}
+
+
+\noindent\textbf{出力結果：}\hrulefill\\
+\LaTeX とWordの比較を表-\ref{tab:basic_table}に示す．  
+\begin{table}[h]
+  \centering
+  \caption{果物の値段と個数}  % ここで表のキャプションを指定する
+  \label{tab:basic_table}  % ここで表のラベルを指定する
+  \begin{tabular}{l|ll} \hline
+    項目 & \LaTeX & Word \\ \hline \hline  % 二重の横罫線
+    数式 & 美しい & 美しくない \\ 
+    相互参照 & めっちゃラク & 面倒 \\ \hline
+  \end{tabular}
+\end{table}
+\\\noindent\hrulefill  
+
+\subsection{欄内における改行}
+
+表の1つの欄の中に多くの情報を記述しなければならないこともあろう．
+\code\ref{code:table_env}で示したような書き方は欄内における改行を認めておらず，多くの情報を1つの欄内に書くことが困難である．
+このような場合は\code\ref{code:multiple_lines}に示したように，tabular環境の中にさらにrabular環境を作成することで，エラーを回避し，欄内で改行を行うことができる．
+
+\begin{lstlisting}[caption=基本の表,label=code:multiple_lines]
+  \LaTeX とWordの比較を表-\ref{tab:multiple_lines}に示す．  
+  \begin{table}[h]
+    \centering
+    \caption{果物の値段と個数}  % ここで表のキャプションを指定する
+    \label{tab:multiple_lines}  % ここで表のラベルを指定する
+    \begin{tabular}{l|ll} \hline
+      項目 & \LaTeX & Word \\ \hline \hline  % 二重の横罫線
+      数式 & 美しい & 美しくない \\ 
+      相互参照 & \hspace{-2mm}\begin{tabular}{l}
+                  めっちゃラク\\
+                  特に図表を追加するときに番号を\\
+                  振り直さなくても良いのが素晴らしい．  
+                \end{tabular} & 面倒 \\ \hline
+    \end{tabular}
+  \end{table}
+\end{lstlisting}
+
+\code\ref{code:multiple_lines}の出力結果を以下に示す．
+\\\noindent\textbf{出力結果：}\hrulefill\\
+\LaTeX とWordの比較を表-\ref{tab:multiple_lines}に示す．  
+\begin{table}[h]
+  \centering
+  \caption{果物の値段と個数}  % ここで表のキャプションを指定する
+  \label{tab:multiple_lines}  % ここで表のラベルを指定する
+  \begin{tabular}{l|ll} \hline
+    項目 & \LaTeX & Word \\ \hline \hline  % 二重の横罫線
+    数式 & 美しい & 美しくない \\ 
+    相互参照 & \hspace{-2mm}\begin{tabular}{l}
+                めっちゃラク\\
+                特に図表を追加するときに番号を\\
+                振り直さなくても良いのが素晴らしい．  
+              \end{tabular} & 面倒 \\ \hline
+  \end{tabular}
+\end{table}
+\\\noindent\hrulefill  
+
+% \code\ref{code:multiple_lines}の出力結果を以下に示す．
+% \noindent\textbf{出力結果：}\hrulefill\\
+% \LaTeX とWordの比較を表-\ref{tab:multiple_lines}に示す．  
+% \begin{table}[h]
+%   \centering
+%   \caption{果物の値段と個数}  % ここで表のキャプションを指定する
+%   \label{tab:multiple_lines}  % ここで表のラベルを指定する
+%   \hspace{-2mm}\begin{tabular}{l|ll} \hline
+%     項目 & \LaTeX & Word \\ \hline \hline  % 二重の横罫線
+%     数式 & 美しい & 美しくない \\ 
+%     相互参照 & めっちゃラク\par 特に図表を追加するときに番号を\par 振り直さなくても良いのが素晴らしい． & 面倒 \\ \hline
+%   \end{tabular}
+% \end{table}
+% \\\noindent\hrulefill  
+
+
+\subsection{列割りと行割りの変更}
+
+場合によってはセルの結合を用いて，行割りや列割りを変更することもあろう．
+このような場合には，multirowパッケージとmulticolパッケージを用いる．
+これらは他のパッケージと同様にプリアンブルにおいてパッケージの取り込みを行うことが必要である．
+
+multicolパッケージを使用した複数列の結合は，tabular環境内で，\textbackslash multicolumn\{結合する列数\}\{文字列の配置\}\{欄内の表記\}のように記述することで実行できる．
+multirowパッケージを使用した複数行の結合は，tabular環境内で，\textbackslash multirow\{結合する行数\}\{$\ast$\}\{欄内の表記\}のように記述することで実行できる．
+
+\code\ref{code:multicol}には，multicolパッケージを用いた列の結合の例を示す．
+\code\ref{code:multicol}のソースコードはロジットモデルの推定結果を示す表の一例であり，4行目以降で列の結合を行っている．
+
+\begin{lstlisting}[caption=列割りを変更した表,label=code:multicol]
+    \documentclass{jsarticle}
+    \usepackage{multicol}
+    \usepackage{booktabs}
+    \begin{document}
+    
+    \begin{table}[tbph]
+      \centering
+      \caption{パラメータ推定結果}
+      \begin{tabular}{lcc} \toprule
+          説明変数 & 推定値 & $t$値 \\\midrule
+          説明変数1のパラメータ$\beta_1$ & $\hat{\beta_1}$ & $t_1^*$ \\
+          説明変数2のパラメータ$\beta_2$ & $\hat{\beta_2}$ & $t_2^*$ \\
+          説明変数3のパラメータ$\beta_3$ & $\hat{\beta_3}$ & $t_3^*$ \\\midrule
+          サンプル数 & \multicolumn{2}{c}{N} \\  % 2列を結合して，中央揃えで，Nと記入する．
+          尤度比 & \multicolumn{2}{c}{$\rho$} \\
+          的中率[\%] & \multicolumn{2}{c}{Acc} \\\bottomrule
+      \end{tabular}
+      \label{tab:logit_result}
+    \end{table}
+    
+    \end{document}
+\end{lstlisting}
+
+\code\ref{code:multicol}の出力結果を以下に示す．\\
+\noindent\textbf{出力結果：}\hrulefill\\
+% \documentclass{jsarticle}
+% \usepackage{multicol}
+% \usepackage{booktabs}
+% \begin{document}
+
+\begin{table}[tbph]
+  \centering
+  \caption{パラメータ推定結果}
+  \begin{tabular}{lcc} \toprule
+      説明変数 & 推定値 & $t$値 \\\midrule
+      説明変数1のパラメータ$\beta_1$ & $\hat{\beta_1}$ & $t_1^*$ \\
+      説明変数2のパラメータ$\beta_2$ & $\hat{\beta_2}$ & $t_2^*$ \\
+      説明変数3のパラメータ$\beta_3$ & $\hat{\beta_3}$ & $t_3^*$ \\\midrule
+      サンプル数 & \multicolumn{2}{c}{N} \\
+      尤度比 & \multicolumn{2}{c}{$\rho$} \\
+      的中率[\%] & \multicolumn{2}{c}{Acc} \\\bottomrule
+  \end{tabular}
+  \label{tab:logit_result}
+\end{table}
+
+% \end{document}
+\noindent\hrulefill  \\
+
+
+

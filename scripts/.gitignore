@@ -276,7 +276,8 @@ TSWLatexianTemp*
 *.lpz
 
 !build/
-build/*
+# build/*
+
 # for latexdiff
 !build/*.aux
 diff
